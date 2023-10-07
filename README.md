@@ -88,3 +88,37 @@ We can persist environment variables (Env Vars) in Gitpod by storing them in Git
 gp env PROJECT_ROOT='/workspace/folder_name'
 ```
 **NOTE:** We can also set Env Vars into *.gitpod.yml*. However, this will only contain non-sensitive env vars. 
+
+## Install AWS CLI
+
+AWS CLI is installed through the bash script[`./bin/install_aws_cli`](./bin/install_aws_cli). Refer to this page: [Getting Started with AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). Apart from it, just like what we have done for the [./bin/install_terraform_cli](./bin/install_terraform_cli) bash script, make sure to add Linux User Permission to execute the script. Simply run follwing command in the terminal:
+
+```sh
+$ chmod u+x ./bin/install_aws_cli
+```
+
+If you are running AWS CLI locally, you have to configure credentials by running **aws configure** method. Since we are using *Gitpod CDE*, it is essential to set up environment variables to configure the AWS CLI. Refer to this page: [Env Vars for the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
+
+To make the Env Vars associated with AWS credentials persistent across all the future terminals, use the follwing command in the terminal:
+
+```sh
+gp env AWS_ACCESS_KEY_ID='AMIA245B6MYXDWEUYDML'
+gp env AWS_SECRET_ACCESS_KEY='emfqXlUPVyNCu7sx5Ziwp35VFxyoXpT0gWiHinv2'
+gp env AWS_DEFAULT_REGION='ca-central-1'
+```
+
+"Now, verify if our AWS credentials are configured correctly by using the following AWS CLI command:"
+
+```sh
+aws sts get-caller-identity
+```
+
+If you've setup the Env Var correctly for your aws credentials, you should see a json payload that will look like this:
+
+```json
+{
+    "UserId": "A7892PDB6MR123DFNTIP7",
+    "Account": "798612437864",
+    "Arn": "arn:aws:iam::798612437864:user/username"
+}
+```
