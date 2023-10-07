@@ -47,3 +47,44 @@ Now, when executing the Bash script, you can use the `./` shorthand notation.
 ## Gitpod lifecycle (before, init, command)
 
 Since we are using Gitpod, it is imperative to be familiar with its **Workspace Lifecycle**. Provided [.gitpod.yml](.gitpod.yml) has **init** specified. It is a codetrap setup by intructor Andrew Brown, so that we could get familiar with ephemeral developer environments such as Gitpod. Basically, we have to replace **init**  with **`before`**. We have to be careful while using **init**, as it will not return existing workspace if we restart it. Please refer to [Gitpod docs](https://www.gitpod.io/docs/configure/workspaces/tasks)
+
+## Environment Variables
+
+Environment Varibales **(Env Vars)** in the bash script are like tags that hold information or setting which the script can read and use. These lables help the script undersand things like where to find certain programs, what username to use or store information safely.
+
+### Env command
+
+We could list out all the **(Env Vars)** using the `env` command. To filter out certain Environment variables combine `env` with ``grep`` commad like this `env | grep HOME`
+
+### How to Set/Unset **(Env Vars)**
+
+We could set up Env Vars using various methods. Some of them are as below;
+
+- In the terminal, we could use command such as `export PROJECT_ROOT = '/workspace/folder_name'` 
+- We could also set Env Var temporarily in the terminal using `PROJECT_ROOT = '/workspace/folder_name' ./bin/script_path`
+- Within a bash script, we can set up the Env Var as below;
+
+ ```sh
+#!/usr/bin/env bash
+PROJECT_ROOT='/workspace/folder_name'
+
+echo $PROJECT_ROOT
+```
+- To **unset** an Env Var, simply use the `unset VARIABLE_NAME` e.g., `unset PROJECT_ROOT` command.
+
+### How to print Env Vars
+
+- We could use the **echo** command to print the env vars e.g., `echo $PROJECT_ROOT`
+
+### Scoping of Env Vars
+
+When you open a new Bash terminal in VSCode, it will not be aware of the environment variables you have just set up in a different terminal. Therefore, if you want to persist the environment variables across all future Bash terminals, you need to set them in your Bash profile, e.g., `bash_profile`.
+
+### Persisting Env Vars in Gitpod
+
+We can persist environment variables (Env Vars) in Gitpod by storing them in Gitpod's Secret Storage. By using the following command, all future workspaces in Gitpod will set up the environment variables for all Bash terminals. 
+
+```sh
+gp env PROJECT_ROOT='/workspace/folder_name'
+```
+**NOTE:** We can also set Env Vars into *.gitpod.yml*. However, this will only contain non-sensitive env vars. 
