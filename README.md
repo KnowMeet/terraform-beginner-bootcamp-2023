@@ -132,13 +132,13 @@ Terraform allows you to define your infrastructure as code, meaning you write co
 
 ### Basic Console commands
 
- - **terraform:** To see a list of Terraform commands by using the `terraform` command. 
- - **terraform init:** It prepares your Terraform project by initializing the necessary plugins and modules, ensuring you have all the right pieces to start creating and managing your infrastructure.
- - **terraform plan:** Think of this like a blueprint or a preview of what Terraform is about to build. When you run terraform plan, it examines your infrastructure code and tells you what changes it intends to make without actually making them.
- - **terraform apply:** This is where Terraform takes your blueprint, and turns it into reality. Running terraform apply executes the changes you've specified in your code, creating, updating, or deleting resources as needed. It's like giving the green light to start building your infrastructure based on the plan. 
+ - **`terraform`:** To see a list of Terraform commands by using the `terraform` command. 
+ - **`terraform init`:** It prepares your Terraform project by initializing the necessary plugins and modules, ensuring you have all the right pieces to start creating and managing your infrastructure.
+ - **`terraform plan`:** Think of this like a blueprint or a preview of what Terraform is about to build. When you run terraform plan, it examines your infrastructure code and tells you what changes it intends to make without actually making them.
+ - **`terraform apply`:** This is where Terraform takes your blueprint, and turns it into reality. Running terraform apply executes the changes you've specified in your code, creating, updating, or deleting resources as needed. It's like giving the green light to start building your infrastructure based on the plan. 
 
  *Note:* When we use `terraform apply` in the terminal, it always prompts to select from *yes* or *no*. Therefore, if we want to automatically approve an apply we could use auto approve flag e.g., `terraform apply --auto-approve` 
-
+ - **`terraform destroy`:** Terraform Destroy is like the "undo" button for your cloud infrastructure. It's a command that tells Terraform to remove and delete all the resources it previously created, helping you tear down your infrastructure easily and cleanly. Similarly as `terraform apply` we could use auto approve flag for it as well. e.g., `terraform destroy --auto-approve`
 ### Terraform Lock File
 
 The file `.terraform.lock.hcl` is an example of terraform lock file. It helps ensure that only one person or process at a time can make changes to your infrastructure code. Think of it as "stoplights" that prevent conflicts when multiple people are working on the same project, so changes are made in an orderly and safe manner. Thereofe, terraform lock file **has to be commited** into the version control system such as Github. 
