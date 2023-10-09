@@ -122,3 +122,34 @@ If you've setup the Env Var correctly for your aws credentials, you should see a
     "Arn": "arn:aws:iam::798612437864:user/username"
 }
 ```
+## Terraform Basics
+
+Terraform allows you to define your infrastructure as code, meaning you write code to specify how your servers, networks, and other resources should be set up and configured. With Terraform, you can create, modify, and delete infrastructure resources in a consistent and repeatable way, making it easier to manage complex systems and environments. Think of it as a way to build and manage your digital world with code.
+
+- **Terraform Registry:** The Terraform Registry is like an online library where you can find pre-built modules and configurations for Terraform, a tool used to manage infrastructure as code. Checkout the [Terraform Registry](https://registry.terraform.io/) website.
+- **Terraform Providers:** Terraform Providers are like connectors that allow Terraform to interact with specific cloud or service providers like AWS, Azure, or Google Cloud. Basically, it allows us to write resource in code. Checkout one of many examples here: [Terraform Random](https://registry.terraform.io/providers/hashicorp/random/latest/docs).
+- **Terraform Modules:** They are a collection of Terraform Configuration files. In other words, they are a way of providing a template to utilize commonly used actions. They are reusable sets of configurations that define and provision specific resources or components, making it easier to create and manage complex infrastructure by organizing it into modular, reusable parts.
+
+### Basic Console commands
+
+ - **terraform:** To see a list of Terraform commands by using the `terraform` command. 
+ - **terraform init:** It prepares your Terraform project by initializing the necessary plugins and modules, ensuring you have all the right pieces to start creating and managing your infrastructure.
+ - **terraform plan:** Think of this like a blueprint or a preview of what Terraform is about to build. When you run terraform plan, it examines your infrastructure code and tells you what changes it intends to make without actually making them.
+ - **terraform apply:** This is where Terraform takes your blueprint, and turns it into reality. Running terraform apply executes the changes you've specified in your code, creating, updating, or deleting resources as needed. It's like giving the green light to start building your infrastructure based on the plan. 
+
+ *Note:* When we use `terraform apply` in the terminal, it always prompts to select from *yes* or *no*. Therefore, if we want to automatically approve an apply we could use auto approve flag e.g., `terraform apply --auto-approve` 
+
+### Terraform Lock File
+
+The file `.terraform.lock.hcl` is an example of terraform lock file. It helps ensure that only one person or process at a time can make changes to your infrastructure code. Think of it as "stoplights" that prevent conflicts when multiple people are working on the same project, so changes are made in an orderly and safe manner. Thereofe, terraform lock file **has to be commited** into the version control system such as Github. 
+
+### Terraform State Files
+
+Terraform state files are like a notebook that keeps track of what your infrastructure looks like currently. They store information about the resources you've created, their current settings, and their relationships. This "notebook" helps Terraform understand your infrastructure's current state, so it can make changes or updates without starting from scratch every time you run a command.
+
+- The `terraform.tfstate` file contains the current state of our infrastructure. Since this file contains the sensitive information, it file **should not be commited** to your version control system.  
+- The `terraform.tfstate.backup` file allows you to revert to the previous state if something goes wrong during an update, helping you avoid accidental data loss or configuration errors.
+
+### Terraform Directory
+
+Terraform Directory contains binaries of terraform providers. A Terraform directory is like a folder where you keep all the files and code needed for your infrastructure project. It's organized to hold your Terraform configuration files, modules, and any other resources in a structured way. Think of it as a workspace where you build and manage your digital infrastructure.
