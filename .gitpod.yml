@@ -1,6 +1,7 @@
 tasks:
   - name: terraform
     before: |
+      source ./bin/generate_tfrc
       source ./bin/install_terraform_cli
   - name: aws-cli
     env:
