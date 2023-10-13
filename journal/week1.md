@@ -1,10 +1,17 @@
 # Terraform Beginner Bootcamp 2023 - Week 1
-
+  
   * [Root Module Structure](#root-module-structure)
   * [Terraform and Input Variables](#terraform-and-input-variables)
     + [Terraform Cloud Variables](#terraform-cloud-variables)
     + [Loading Input Variables](#loading-input-variables)
     + [Precedence of Terraform Variables](#precedence-of-terraform-variables)
+  * [Dealing With Configuration Drift](#dealing-with-configuration-drift)
+    + [Terraform Import](#terraform-import)
+    + [Fix Manual Configuration](#fix-manual-configuration)
+    + [Terraform Refersh](#terraform-refersh)
+  * [Terraform Module Directory Structure](#terraform-module-directory-structure)
+    + [Passing Input Variables](#passing-input-variables)
+    + [Modules Sources](#modules-sources)
 
 ## Root Module Structure
 
@@ -12,7 +19,7 @@ The root module in Terraform is like the top-level folder for your infrastructur
 
 Our root module structure is as follows:
 
-```
+```sh
 PROJECT_ROOT
 │
 ├── main.tf                 # everything else.
@@ -87,3 +94,52 @@ To learn more about Terraform import, refer to [Terraform import](https://develo
 ### Fix Manual Configuration
 
 `Terraform Plan` can't automatically fix deleted infrastructure, but it can help recreate and restore it. When someone deletes infrastructure outside of Terraform, running a terraform plan can detect the missing resources and propose a plan to recreate them. By applying the generated plan, Terraform can reestablish the deleted resources, effectively "fixing" the manual deletion, ensuring the infrastructure matches the desired configuration in your Terraform code. This ability to recover and reconcile infrastructure state is a key benefit of Terraform.
+
+### Terraform Refersh
+
+The `terraform refresh` command in Terraform is like a command to query your existing infrastructure to update Terraform's state file. It doesn't make any changes to your resources; instead, it helps Terraform update its knowledge about the current state of your infrastructure. This command is useful when you want to bring Terraform's state file in sync with the real-world state of your resources.
+
+For example: `terraform apply -refresh-only -auto-approve`
+
+## Terraform Module Directory Structure
+
+Terraform module directory structure is simple and flexible. It usually consists of a directory containing the module's ``.tf` configuration files. It is recommended to place modules in a **modules** directory when locally developing modules. However, you can name the directory whatever way you prefer. Here's a basic structure:
+
+```sh
+- Module Directory: Contains the module's configuration files, often named with a .tf extension.
+  - README.md: To describe how to use the module.
+  - variables.tf: Defines input variables for the module.
+  - outputs.tf: Defines the values the module will output.
+  - main.tf: The main configuration file for the module.
+```
+### Passing Input Variables
+
+Passing input variables to a Terraform module within its directory structure involves defining these variables in the module and setting their values when you use the module in your main configuration. Here's a simple explanation:
+
+```tf
+  module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+  user_uuid = var.user_uuid
+  bucket_name = var.bucket_name
+}
+```
+### Modules Sources
+
+Using the source, we can import the module from various places. It tells Terraform where to find the module's configuration files. Module sources can be defined using different methods:
+
+- **Local Paths**: You can specify the module source using a local file system path, like `./modules/path-to-module-directory`, which points to a directory on your machine.
+
+See below example to understand how we have referenced module using local path.
+
+```tf
+  module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+}
+```
+
+- **Remote URLs**: You can use URLs to modules hosted in version control systems like Git or in module registries. For example, you can specify a module source like `git::https://github.com/user/module-repo.git`.
+
+- **Terraform registry**: A module registry is the native way of distributing Terraform modules for use across multiple configurations, using a Terraform-specific protocol that has full support for module versioning.
+
+To learn more about it, visit:[Modules Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
+
