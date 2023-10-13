@@ -68,3 +68,22 @@ Terraform variables follow a specific precedence order when determining their va
 
 - **Default Values**: If no value is set anywhere else, Terraform uses the default values defined in your configuration.
 
+## Dealing With Configuration Drift
+
+If you lose your **Terraform state file**, it becomes challenging to manage and update your infrastructure because Terraform relies on the state to track the existing resources. In other words, you most likley have to tear down all your cloud infrastructure manually.
+
+Terraform import can help to some extent by allowing you to re-import existing resources into your Terraform configuration. This helps Terraform regain awareness of those resources, although it won't fully restore the historical state, so it's a recovery mechanism, but not a complete solution for state file loss.You can use terraform import but it won't for all cloud resources. You need check the terraform providers documentation for which resources support import.
+
+### Terraform Import
+
+To learn more about Terraform import, refer to [Terraform import](https://developer.hashicorp.com/terraform/cli/import) webpage.
+
+**Example**: How to recover AWS S3 bucket using following command without having the Terraform state file.
+
+`terraform import aws_s3_bucket.bucket bucket-name`
+
+[Terraform Import AWS S3 Bucket Import](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import)
+
+### Fix Manual Configuration
+
+`Terraform Plan` can't automatically fix deleted infrastructure, but it can help recreate and restore it. When someone deletes infrastructure outside of Terraform, running a terraform plan can detect the missing resources and propose a plan to recreate them. By applying the generated plan, Terraform can reestablish the deleted resources, effectively "fixing" the manual deletion, ensuring the infrastructure matches the desired configuration in your Terraform code. This ability to recover and reconcile infrastructure state is a key benefit of Terraform.

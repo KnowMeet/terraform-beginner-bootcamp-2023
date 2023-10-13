@@ -1,5 +1,5 @@
-output "random_bucket_name" {
+output "bucket_name" {
 # Bucket Naming Rules
 # https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html
-  value = random_string.bucket_name.result
+  value = aws_s3_bucket.website_bucket.bucket
 }
