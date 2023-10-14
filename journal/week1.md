@@ -143,3 +143,48 @@ See below example to understand how we have referenced module using local path.
 
 To learn more about it, visit:[Modules Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
 
+## Considerations when using ChatGPT to write Terraform
+
+LLMs such as ChatGPT may not be trained on the latest documentation or information about Terraform. It may likely produce older examples that could be deprecated. Often affecting providers. Therefore, it is recommended to always verify the code with official documentation of Terraform.
+
+## Working with Files in Terraform
+
+Terraform is primarily designed for managing infrastructure, but it includes some file-related functions to make certain infrastructure configurations more flexible. While it's not the best tool for handling files like a dedicated file management system, these functions can be useful for scenarios where you need to check for the existence of files or their checksums within your infrastructure code, making Terraform more versatile for specific use cases. However, for advanced file management tasks, other tools specialized for that purpose might be a better choice.
+
+
+### Static website hosting
+
+Now, we have to create files for the S3 static website. In order to d that, We have created a folder called [public](/public/) and uploaded [index.html](/public/index.html) and [error.html](/public/error.html). 
+
+
+### Fileexists function
+This is a built in terraform function to check the existance of a file.
+
+In our project, we have used this `condition = fileexists(var.error_html_filepath)` code to check the file's existence. 
+
+To learn more about it, visit [Fileexists function](https://developer.hashicorp.com/terraform/language/functions/fileexists)
+
+### Filemd5
+
+In Terraform, the `filemd5` function is used to compute the MD5 hash of a file's content, while the `etag` is like an entity tag, typically used to represent the version of a file or resource. In some scenarios, these two can be related, as the MD5 hash of a file's content can serve as an ETag to identify that file's version. 
+
+In our project, we have used the following piece of code to keep the track of both `index.html` and `error.html` file
+
+```hcl
+etag = filemd5(var.index_html_filepath)
+etag = filemd5(var.error_html_filepath)
+```
+Vist [filemd5](https://developer.hashicorp.com/terraform/language/functions/filemd5) webpage to learn more about it.
+
+### Path Variable
+In terraform there is a special variable called path that allows us to reference local path.
+
+- **.module** = get the path for the current module
+- **path.root** = get the path for the root module 
+
+In our project, we have used the following piece of code to refernce the path of s3 object.
+
+```hcl
+resource "aws_s3_object" "index_html" { bucket = aws_s3_bucket.website_bucket.bucket key = "index.html" source = "${path.root}/public/index.html" }
+```
+To learn more about it, visit [Special Path Variable](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info).
