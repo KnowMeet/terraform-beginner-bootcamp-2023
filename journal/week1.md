@@ -1,17 +1,30 @@
 # Terraform Beginner Bootcamp 2023 - Week 1
+
+ ## Learning Goal for This Week
+ Our focus for this week's boot camp is on **Getting Comfortable with Terraform and Terraform Cloud**.
   
-  * [Root Module Structure](#root-module-structure)
-  * [Terraform and Input Variables](#terraform-and-input-variables)
-    + [Terraform Cloud Variables](#terraform-cloud-variables)
-    + [Loading Input Variables](#loading-input-variables)
-    + [Precedence of Terraform Variables](#precedence-of-terraform-variables)
-  * [Dealing With Configuration Drift](#dealing-with-configuration-drift)
-    + [Terraform Import](#terraform-import)
-    + [Fix Manual Configuration](#fix-manual-configuration)
-    + [Terraform Refersh](#terraform-refersh)
-  * [Terraform Module Directory Structure](#terraform-module-directory-structure)
-    + [Passing Input Variables](#passing-input-variables)
-    + [Modules Sources](#modules-sources)
+- [Root Module Structure](#root-module-structure)
+- [Terraform and Input Variables](#terraform-and-input-variables)
+  * [Terraform Cloud Variables](#terraform-cloud-variables)
+  * [Loading Input Variables](#loading-input-variables)
+  * [Precedence of Terraform Variables](#precedence-of-terraform-variables)
+- [Dealing With Configuration Drift](#dealing-with-configuration-drift)
+  * [Terraform Import](#terraform-import)
+  * [Fix Manual Configuration](#fix-manual-configuration)
+  * [Terraform Refersh](#terraform-refersh)
+- [Terraform Module Directory Structure](#terraform-module-directory-structure)
+  * [Passing Input Variables](#passing-input-variables)
+  * [Modules Sources](#modules-sources)
+- [Considerations using ChatGPT](#considerations-using-chatgpt)
+- [Working with Files in Terraform](#working-with-files-in-terraform)
+  * [Static website hosting](#static-website-hosting)
+  * [Fileexists function](#fileexists-function)
+  * [Filemd5](#filemd5)
+  * [Path Variable](#path-variable)
+- [Terraform Locals](#terraform-locals)
+- [Terraform Data Sources](#terraform-data-sources)
+- [Working with JSON](#working-with-json)
+    
 
 ## Root Module Structure
 
@@ -64,7 +77,7 @@ Terraform variables follow a specific precedence order when determining their va
 
 - **Terraform Variable Definitions**: Variables defined directly in your Terraform configurations. Terraform variable definitions are like labels you create in your configuration to hold values. You can use the following variable example throughout your Terraform configuration. 
 
-```sh
+```tf
     variable "instance_count" {
     description = "The number of instances to create"
      type        = number
@@ -143,7 +156,7 @@ See below example to understand how we have referenced module using local path.
 
 To learn more about it, visit:[Modules Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
 
-## Considerations when using ChatGPT to write Terraform
+## Considerations using ChatGPT
 
 LLMs such as ChatGPT may not be trained on the latest documentation or information about Terraform. It may likely produce older examples that could be deprecated. Often affecting providers. Therefore, it is recommended to always verify the code with official documentation of Terraform.
 
@@ -188,3 +201,34 @@ In our project, we have used the following piece of code to refernce the path of
 resource "aws_s3_object" "index_html" { bucket = aws_s3_bucket.website_bucket.bucket key = "index.html" source = "${path.root}/public/index.html" }
 ```
 To learn more about it, visit [Special Path Variable](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info).
+
+## Terraform Locals
+Locals allows us to define local variables. It can be very useful when we need transform data into another format and have referenced a varaible.  In Terraform, "locals" refer to a way of defining and using values within your configuration files. They provide a more efficient and cleaner way to work with values that are used multiple times within your configuration. You can think of "locals" as variables that are used for readability and to reduce redundancy in your Terraform code.
+
+```tf
+locals {
+  s3_origin_id = "MyS3Origin"
+}
+```
+To gain further insights, take a look at this webpage: [Local Values](https://developer.hashicorp.com/terraform/language/values/locals).
+
+## Terraform Data Sources
+In Terraform, data sources are like a way to fetch information from external sources or existing infrastructure and use it in your configurations. They act as a bridge to bring external data into your Terraform code. This allows use to source data from cloud resources. This is useful when we want to reference cloud resources without importing them.
+
+```tf
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+```
+Plase refer to [Data Sources](https://developer.hashicorp.com/terraform/language/data-sources) webpage to learn more about it.
+
+## Working with JSON
+In Terraform, `jsondecode` is a function that helps you work with JSON data within your configuration. It takes a JSON-formatted string and converts it into a data structure that Terraform can use. We have used the `jsonencode` to create the json policy inline in the hcl.
+
+```tf
+> jsonencode({"hello"="world"})
+{"hello":"world"}
+```
+For additional information, please check out this [jsonencode](https://developer.hashicorp.com/terraform/language/functions/jsonencode). 
