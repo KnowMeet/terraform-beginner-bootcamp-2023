@@ -24,6 +24,8 @@
 - [Terraform Locals](#terraform-locals)
 - [Terraform Data Sources](#terraform-data-sources)
 - [Working with JSON](#working-with-json)
+- [Changing the Lifecycle of Resources](#changing-the-lifecycle-of-resources)
+- [Terraform Data](#terraform-data)
     
 
 ## Root Module Structure
@@ -171,6 +173,7 @@ Now, we have to create files for the S3 static website. In order to d that, We h
 
 
 ### Fileexists function
+
 This is a built in terraform function to check the existance of a file.
 
 In our project, we have used this `condition = fileexists(var.error_html_filepath)` code to check the file's existence. 
@@ -190,6 +193,7 @@ etag = filemd5(var.error_html_filepath)
 Vist [filemd5](https://developer.hashicorp.com/terraform/language/functions/filemd5) webpage to learn more about it.
 
 ### Path Variable
+
 In terraform there is a special variable called path that allows us to reference local path.
 
 - **.module** = get the path for the current module
@@ -203,6 +207,7 @@ resource "aws_s3_object" "index_html" { bucket = aws_s3_bucket.website_bucket.bu
 To learn more about it, visit [Special Path Variable](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info).
 
 ## Terraform Locals
+
 Locals allows us to define local variables. It can be very useful when we need transform data into another format and have referenced a varaible.  In Terraform, "locals" refer to a way of defining and using values within your configuration files. They provide a more efficient and cleaner way to work with values that are used multiple times within your configuration. You can think of "locals" as variables that are used for readability and to reduce redundancy in your Terraform code.
 
 ```tf
@@ -213,6 +218,7 @@ locals {
 To gain further insights, take a look at this webpage: [Local Values](https://developer.hashicorp.com/terraform/language/values/locals).
 
 ## Terraform Data Sources
+
 In Terraform, data sources are like a way to fetch information from external sources or existing infrastructure and use it in your configurations. They act as a bridge to bring external data into your Terraform code. This allows use to source data from cloud resources. This is useful when we want to reference cloud resources without importing them.
 
 ```tf
@@ -225,6 +231,7 @@ output "account_id" {
 Plase refer to [Data Sources](https://developer.hashicorp.com/terraform/language/data-sources) webpage to learn more about it.
 
 ## Working with JSON
+
 In Terraform, `jsondecode` is a function that helps you work with JSON data within your configuration. It takes a JSON-formatted string and converts it into a data structure that Terraform can use. We have used the `jsonencode` to create the json policy inline in the hcl.
 
 ```tf
@@ -232,3 +239,31 @@ In Terraform, `jsondecode` is a function that helps you work with JSON data with
 {"hello":"world"}
 ```
 For additional information, please check out this [jsonencode](https://developer.hashicorp.com/terraform/language/functions/jsonencode). 
+
+## Changing the Lifecycle of Resources
+
+Changing the lifecycle of resources in Terraform means altering how Terraform manages those resources during its execution. You can change a resource's lifecycle using the lifecycle block within a resource configuration. Checkout below how we used lifecycle block that monitors the behaviour of `index.html` file.
+
+```tf
+lifecycle {
+    replace_triggered_by = [terraform_data.content_version.output]
+    ignore_changes = [etag]
+  }
+```
+
+To learn more about it, visit [Meta Arguments Lifcycle](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle).
+
+## Terraform Data
+
+The `terraform_data` resource type in Terraform is not a standard resource like `aws_instance`. Instead, it's a special type used to access and retrieve data or information from your Terraform configuration. You can think of it as a way to read or query data already defined in your configuration and use it elsewhere. It's particularly helpful when you need to reference specific values or results within your Terraform code. 
+
+Here's how we have used terraform_data resource type in our project to keep the track of version of index.html which will be triggered by the `content_version` variable.
+
+```tf
+resource "terraform_data" "content_version" {
+  input = var.content_version
+}
+```
+
+Explore [Terraform Data](https://developer.hashicorp.com/terraform/language/resources/terraform-data) to learn more about it.
+
