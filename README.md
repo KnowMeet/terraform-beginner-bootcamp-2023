@@ -13,6 +13,7 @@ Checkout the diagram below to understand what we we will be working on.
 
 - [Week 0](journal/week0.md)
 - [Week 1](journal/week1.md)
+- [Week 2](journal/week2.md)
 
 ## Useful Resources
 
