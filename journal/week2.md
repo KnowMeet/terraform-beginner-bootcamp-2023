@@ -9,6 +9,11 @@
   * [Executing Ruby Scripts](#executing-ruby-scripts)
   * [Sinatra](#sinatra)
   * [Running the web server](#running-the-web-server)
+- [Custom provider](#custom-provider)
+  * [main.go](#maingo)
+  * [.terraformrc](#terraformrc)
+  * [build_provider](#build-provider)
+  * [go.mod](#gomod)
 
 ## project framework
 
@@ -73,3 +78,36 @@ bundle exec ruby server.rb
 ```
 *Note:* All of the code for our server is stored in the server.rb file.
 
+## Custom provider
+
+Creating a Custom provider in Terraform is helpful because it allows you to manage resources and services that aren't natively supported by Terraform. Basically, it is a way to interact with APIs and resources. In our case, we are building a custom provider (**terraform-provider-terratowns**) for the Terraform in golang. 
+
+### main.go 
+
+In the **main.go** file we have built a custom provider code for our Terraform provider under [terraform-provider-terratowns](/terraform-provider-terratowns/) folder.
+
+### .terraformrc
+
+To override default settings, and specify where to look for custom providers we use **.terraformrc** file. In this file, we have to specify the hidden directory of **terraform.d/plugins**. Generated binary files will reside in this folder, giving custom provider to use necessary plugins for the project.  
+
+### build_provider
+
+This Bash script [bin/build_provider](/bin/build_provider) is designed to build and install a local Terraform provider, **terraform-provider-terratowns**. It basically does the following things:
+
+- Defining variables for the plugin directory and name.
+- Building the provider from the source code and copying it to the appropriate directories.
+- Removing any existing Terraform caches and lock files, ensuring the new provider is available for use.
+
+### go.mod
+
+This [terraform-provider-terratowns/go.mod](/terraform-provider-terratowns/go.mod) allows the project to use the local version of the module during development, making it easier to test changes or modifications before committing them to the remote repository.
+
+After setting up the code for the custom provider run following commands in CLI:
+
+```go
+cd terraform-provider-terratowns
+go mod init 
+go get github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema
+go get github.com/hashicorp/terraform-plugin-sdk/v2/plugin
+go build -o terraform-provider-terratowns_v1.0.0
+```
