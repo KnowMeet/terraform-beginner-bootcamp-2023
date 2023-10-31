@@ -8,6 +8,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"context"
 	"log"
 	"fmt"
 	"github.com/google/uuid"
@@ -96,6 +97,7 @@ func Resource() *schema.Resource {
 		ReadContext: resourceHouseRead,
 		UpdateContext: resourceHouseUpdate,
 		DeleteContext: resourceHouseDelete,
+<<<<<<< HEAD
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type: schema.TypeString,
@@ -183,7 +185,6 @@ func resourceHouseCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	d.SetId(homeUUID)
 
 	log.Print("resourceHouseCreate:end")
-
 	return diags
 }
 
@@ -289,6 +290,7 @@ func resourceHouseUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 }
 
 func resourceHouseDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+
 	log.Print("resourceHouseDelete:start")
 	var diags diag.Diagnostics
 
