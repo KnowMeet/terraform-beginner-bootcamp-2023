@@ -14,6 +14,7 @@
   * [.terraformrc](#terraformrc)
   * [build_provider](#build-provider)
   * [go.mod](#gomod)
+- [Terraform variables as Env Vars](#terraform-variables-as-env-vars)
 
 ## project framework
 
@@ -111,3 +112,16 @@ go get github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema
 go get github.com/hashicorp/terraform-plugin-sdk/v2/plugin
 go build -o terraform-provider-terratowns_v1.0.0
 ```
+
+## Terraform variables as Env Vars
+
+We can set Terraform variables as environment variables. Terraform automatically detects environment variables with the `TF_VAR_` prefix and uses them as variables. For example, we can set an environment variable like this:
+
+```tf
+export TF_VAR_example_var="custom_value"
+```
+In our project, we have set up the Terraform Variables as Env Vars for storing sensitive information such as user_uuid and access_token which is used for accessing the [Terratowns](https://terratowns.cloud/) website.
+
+
+
+
