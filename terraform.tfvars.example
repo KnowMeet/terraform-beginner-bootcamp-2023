@@ -1,9 +1,9 @@
 terratowns_endpoint= "https://terratowns.cloud/api"
-mini-militia = {
-  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/mini-militia"
-  content_version = 2 
-}
+# mini-militia = {
+#   public_path = "/workspace/terraform-beginner-bootcamp-2023/public/mini-militia"
+#   content_version = 2 
+# }
 whiplash = {
   public_path = "/workspace/terraform-beginner-bootcamp-2023/public/whiplash"
-  content_version = 1 
+  content_version = 5 
 }

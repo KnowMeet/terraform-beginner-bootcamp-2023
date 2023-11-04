@@ -1,12 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>whiplash</title>
+    <title>Movie Review: Whiplash</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .movie-poster {
+            max-width: 100%;
+        }
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #222;
+        }
+        p {
+            font-size: 16px;
+            color: #444;
+        }
+        .slideshow-container {
+            max-width: 100%;
+            position: relative;
+            margin: 0 auto;
+        }
+        .mySlides {
+            display: none;
+        }
+        .mySlides img {
+            width: 100%;
+        }
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .prev {
+            left: 0;
+        }
+        .next {
+            right: 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>My favourite movie of all time - whiplash</h1>
-    <img src="/assets/whiplash.jpg" width="150px "/>
+    <header>
+        Movie Review: Whiplash
+    </header>
+    <div class="container">
+        <img class="movie-poster" src="/assets/whiplash.jpg" alt="Whiplash Movie Poster" style="width:600px">
+        
+        <h2>Overview</h2>
+        <p>
+            Why 'Whiplash' is my all-time favorite movie: It's a mesmerizing celebration of the obsessed artist. 
+  This film powerfully captures the sacrifices and unwavering dedication required to achieve greatness. 
+  Miles Teller and J.K. Simmons' performances are a symphony of passion and obsession. 
+  If you love stories of unyielding ambition, 'Whiplash' is a must-watch. Andrew, if you've not watched it,
+  please watch it when have some free time!"
+        </p>
+        
+        <h2>Review</h2>
+        <p>
+            "Whiplash" is a cinematic tour de force, a gripping and often uncomfortable exploration of the pursuit of greatness. 
+            J.K. Simmons' performance is nothing short of remarkable, earning him an Academy Award for Best Supporting Actor.
+        </p>
+        
+        <h2>Movie-Scenes</h2>
+        <div class="slideshow-container">
+            <div class="mySlides">
+                <img src="/assets/practice.jpg" alt="Whiplash Scene 1" style="width:500px">
+            </div>
+            <div class="mySlides">
+                <img src="/assets/date.jpg" alt="Whiplash Scene 2" style="width:500px">
+            </div>
+            <div class="mySlides">
+                <img src="/assets/JK.jpg" alt="Whiplash Scene 3" style="width:500px">
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </div>
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let i;
+            const slides = document.getElementsByClassName("mySlides");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 2000); // Change image every 3 seconds
+        }
+    </script>
 </body>
 </html>
