@@ -15,6 +15,7 @@
   * [build_provider](#build-provider)
   * [go.mod](#gomod)
 - [Terraform variables as Env Vars](#terraform-variables-as-env-vars)
+- [Nested Variables in .tfvars](#nested-variables-in-tfvars)
 
 ## project framework
 
@@ -121,6 +122,34 @@ We can set Terraform variables as environment variables. Terraform automatically
 export TF_VAR_example_var="custom_value"
 ```
 In our project, we have set up the Terraform Variables as Env Vars for storing sensitive information such as user_uuid and access_token which is used for accessing the [Terratowns](https://terratowns.cloud/) website.
+
+## Nested Variables in .tfvars
+
+In Terraform, we can use nested variables in .tfvars files to organize and structure our configuration data hierarchically. Nested variables can be especially useful when working with complex infrastructure that requires various settings and configurations. Here's a simple explanation on how we used it in our project:
+
+1. First of all, We have declared the variable in the [variables.tf](/variables.tf) file.
+
+```tf
+
+variable "whiplash" {
+  type = object({
+    public_path = string
+    content_version = number
+  })
+}
+```
+
+2. Then, we have assign the vaious values to this variable in the [.tfvars](/terraform.tfvars.example) file.
+
+```tf
+whiplash = {
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/whiplash"
+  content_version = 1 
+}
+```
+
+
+
 
 
 

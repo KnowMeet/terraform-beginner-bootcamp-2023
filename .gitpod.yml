@@ -8,12 +8,14 @@ tasks:
       source ./bin/generate_tfrc
       source ./bin/install_terraform_cli
       cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
+      public/mini-militia/index.html
   - name: sinatra
     before: | 
       cd $PROJECT_ROOT
       cd terratowns_mock_server
       bundle install
       bundle exec ruby server.rb 
+      
   - name: aws-cli
     env:
       AWS_CLI_AUTO_PROMPT: on-partial

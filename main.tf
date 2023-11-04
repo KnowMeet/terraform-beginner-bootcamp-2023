@@ -14,12 +14,13 @@ terraform {
   #    name = "terra-house-1"
   #  }
   #}
-  #cloud {
-  #  organization = "MeetRajput"
-  #  workspaces {
-  #    name = "terra-house-1"
-  #  }
-  #}
+
+  cloud {
+    organization = "MeetRajput"
+    workspaces {
+      name = "terra-house-1"
+    }
+  }
 
 }
 
@@ -29,14 +30,12 @@ provider "terratowns" {
   token= var.terratowns_access_token
 }
 
- module "terrahouse_aws" {
-   source = "./modules/terrahouse_aws"
-   user_uuid = var.teacherseat_user_uuid
-   index_html_filepath = var.index_html_filepath
-   error_html_filepath = var.error_html_filepath
-   content_version = var.content_version
-   assets_path = var.assets_path
- }
+module "home_mini-militia" {
+  source = "./modules/terrahome_aws"
+  user_uuid = var.teacherseat_user_uuid
+  public_path = var.mini-militia.public_path
+  content_version = var.mini-militia.content_version
+}
 
 resource "terratowns_home" "home" {
   name = "One of my favourite games of all time - Mini Milita"
@@ -46,7 +45,27 @@ It became a sensation before the era of PUBG and Fortnite, thanks to its easy ac
 With friends or foes, you'll find yourself engrossed in thrilling combat, where quick reflexes and strategy rule the day. 
 It's a timeless classic that made mobile gaming a battleground of fun and excitement.
 DESCRIPTION
-  domain_name = module.terrahouse_aws.cloudfront_url
+  domain_name = module.home_mini-militia.domain_name
   town = "missingo"
-  content_version = 1
+  content_version = var.mini-militia.content_version
 }
+
+  module "home_whiplash" {
+    source = "./modules/terrahome_aws"
+    user_uuid = var.teacherseat_user_uuid
+    public_path = var.whiplash.public_path
+    content_version = var.whiplash.content_version
+  }
+  
+  resource "terratowns_home" "home_whip" {
+    name = "One of my favourite movies of all time - Whiplash"
+    description = <<DESCRIPTION
+  Why 'Whiplash' is my all-time favorite movie: It's a mesmerizing celebration of the obsessed artist. 
+  This film powerfully captures the sacrifices and unwavering dedication required to achieve greatness. 
+  Miles Teller and J.K. Simmons' performances are a symphony of passion and obsession. 
+  If you love stories of unyielding ambition, 'Whiplash' is a must-watch." 🎵🎥🥁 
+  DESCRIPTION
+    domain_name = module.home_whiplash.domain_name
+    town = "missingo"
+    content_version = var.whiplash.content_version
+  }
