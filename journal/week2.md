@@ -58,7 +58,7 @@ Then you need to run the `bundle install` command.  This will install the gems o
 
 ### Executing Ruby Scripts
 
-We have to use `bundle exec` to tell future ruby scripts to use the gems we installed. This is the way we set context. Therefore, in our case, in [.gitpod.yml](.gitpod.yml), we need to set the following command.
+We have to use `bundle exec` to tell future ruby scripts to use the gems we installed. This is the way we set context. Therefore, in our case, in `.gitpod.yml`, we need to set the following command.
 
 ```rb
 bundle exec
@@ -72,7 +72,7 @@ Visit the [Sinatra](https://sinatrarb.com/) webpage, to learn about it more.
 
 ### Running the web server
 
-Since we are using Gitpod, we can run the web server by placing the following commands in the [.gitpod.yml](.gitpod.yml) file. 
+Since we are using Gitpod, we can run the web server by placing the following commands in the `.gitpod.yml` file. 
 
 ```rb
 bundle install

@@ -44,12 +44,10 @@ $ cat /etc/*release*
 
 ### Refactoring Into Bash Script
 
-During the installation of the Terraform CLI, we noticed that there are many Bash script commands to execute. Therefore, let's create a Bash script to install the Terraform CLI and reduce the time spent on manual execution of each command one by one. This will not only keep our [.gitpod.yml](.gitpod.yml) minimal but also allow better portability for other projects.
+During the installation of the Terraform CLI, we noticed that there are many Bash script commands to execute. Therefore, let's create a Bash script to install the Terraform CLI and reduce the time spent on manual execution of each command one by one. This will not only keep our **.gitpod.yml** minimal but also allow better portability for other projects.
 #### Shebang
 
 A shebang `#!` in a Bash script is used to specify the interpreter that should execute the script. In other words, it ensures that the script runs with the correct interpreter. Therefore, make sure to include `#!` at the top of your Bash script. To learn about it more, visit [Baeldung](https://www.baeldung.com/linux/shebang)
-
-The bash script is located here: [./bin/install_terraform_cli](./bin/install_terraform_cli)
 
 ### Linux Permission
 
@@ -108,7 +106,7 @@ gp env PROJECT_ROOT='/workspace/folder_name'
 
 ## Install AWS CLI
 
-AWS CLI is installed through the bash script[`./bin/install_aws_cli`](./bin/install_aws_cli). Refer to this page: [Getting Started with AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). Apart from it, just like what we have done for the [./bin/install_terraform_cli](./bin/install_terraform_cli) bash script, make sure to add Linux User Permission to execute the script. Simply run follwing command in the terminal:
+AWS CLI is installed through the bash script `./bin/install_aws_cli`. Refer to this page: [Getting Started with AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). Apart from it, just like what we have done for the `./bin/install_terraform_cli` bash script, make sure to add Linux User Permission to execute the script. Simply run follwing command in the terminal:
 
 ```sh
 $ chmod u+x ./bin/install_aws_cli
@@ -186,7 +184,7 @@ Using Terraform Cloud to store Terraform state files is like keeping your import
 
  - Generate a Terraform Cloud API token manually from [Token page](https://app.terraform.io/app/settings/tokens?source=terraform-login).
 
- - Since the Terraform will store the token in plain text in the [json file](/home/gitpod/.terraform.d/credentials.tfrc.json), create this file manually in Gitpod terminal using below commands at this location. 
+ - Since the Terraform will store the token in plain text in the `json file`, create this file manually in Gitpod terminal using below commands at this location. 
 
  ```sh
   touch /home/gitpod/.terraform.d/credentials.tfrc.json
@@ -204,4 +202,4 @@ Using Terraform Cloud to store Terraform state files is like keeping your import
 }
 ```
 
-**NOTE:** We have automated this workaround with the bash script. Refer to this [./bin/generate_tfrc](./bin/generate_tfrc) file.
+**NOTE:** We have automated this workaround with the bash script. Refer to this ``./bin/generate_tfrc` file.
